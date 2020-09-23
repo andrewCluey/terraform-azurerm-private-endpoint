@@ -34,10 +34,11 @@ resource "azurerm_private_endpoint" "pe" {
     is_manual_connection           = false
     private_connection_resource_id = var.pe_resource_id
   }
-
+  
   private_dns_zone_group {
     name                 = var.private_dns_zone_name
-    private_dns_zone_ids = [var.private_dns_zone_id]
+    private_dns_zone_ids = var.private_dns_zone_id
   }
 }
+
 

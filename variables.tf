@@ -25,7 +25,8 @@ variable "private_dns_zone_name" {
 
 variable "private_dns_zone_id" {
   description = "The ID of the privatelink DNS zone in Azure to register the Private Endpoint. Use a Data lookup block in the calling code if not known."
-  type        = string
+  type        = list(string)
+  default     = []
 }
 
 variable "pe_resource_id" {
