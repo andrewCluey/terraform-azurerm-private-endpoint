@@ -18,6 +18,13 @@ variable "pe_subnet_name" {
   type        = string
 }
 
+variable "subresource_names" {
+  description = "A list of subresources that the private Endpoint is able to connect to. Refer to Azure documentation for full list."
+  type        = list(string)
+  default     = [] 
+}
+
+
 #variable "private_dns_zone_name" {
 #  description = "The name of the privatelink DNS zone in Azure to register the Private Endpoints"
 #  type        = string
