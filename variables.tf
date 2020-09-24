@@ -21,20 +21,20 @@ variable "pe_subnet_name" {
 variable "subresource_names" {
   description = "A list of subresources that the private Endpoint is able to connect to. Refer to Azure documentation for full list."
   type        = list(string)
-  default     = [] 
+  default     = []
 }
 
 
-#variable "private_dns_zone_name" {
-#  description = "The name of the privatelink DNS zone in Azure to register the Private Endpoints"
-#  type        = string
-#}
+variable "private_dns_zone_name" {
+  description = "The name of the privatelink DNS zone in Azure to register the Private Endpoints"
+  type        = string
+}
 
-#variable "private_dns_zone_id" {
-#  description = "The ID of the privatelink DNS zone in Azure to register the Private Endpoint. Use a Data lookup block in the calling code if not known."
-#  type        = list(string)
-#  default     = []
-#}
+variable "private_dns_zone_id" {
+  description = "The ID of the privatelink DNS zone in Azure to register the Private Endpoint. Use a Data lookup block in the calling code if not known."
+  type        = list(string)
+  default     = []
+}
 
 variable "pe_resource_id" {
   description = "The ID of the Resource that will have the new Private Endpoint Assigned."

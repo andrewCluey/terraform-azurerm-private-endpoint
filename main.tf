@@ -22,19 +22,21 @@ data "azurerm_resource_group" "pe_rg" {
 ###############################
 # Create a new Private Endpoint
 ###############################
-
 resource "azurerm_private_endpoint" "pe" {
   name                = "${var.pe_resource_name}-pe"
   location            = data.azurerm_resource_group.pe_rg.location
   resource_group_name = data.azurerm_resource_group.pe_rg.name
   subnet_id           = data.azurerm_subnet.pe_subnet.id
-  subresource_names   = var.subresource_names
 
   private_service_connection {
     name                           = "${var.pe_resource_name}-connection"
     is_manual_connection           = false
     private_connection_resource_id = var.pe_resource_id
+    subresource_names              = var.subresource_names
+  }
+
+  private_dns_zone_group {
+    name                 = var.private_dns_zone_name
+    private_dns_zone_ids = var.private_dns_zone_id
   }
 }
-
-
