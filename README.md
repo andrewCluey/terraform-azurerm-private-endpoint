@@ -2,6 +2,7 @@
 Create a Private Endpoint for an Azure Resource.
 
 ## Subresource name types
+|sss|sss|sss|
 |---|---|---|
 |Data Lake File System Gen2	|dfs	|dfs_secondary|
 |Sql Database / Data Warehouse	|sqlServer	|
