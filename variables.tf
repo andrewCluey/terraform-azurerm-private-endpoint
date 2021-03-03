@@ -1,4 +1,4 @@
-variable "pe_vnet_resource_group_name" {
+variable "vnet_resource_group_name" {
   description = "The name of the Resource group where the vNET for the Private Endpoint exists."
   type        = string
 }
@@ -8,12 +8,12 @@ variable "pe_resource_group_name" {
   type        = string
 }
 
-variable "pe_vnet_name" {
+variable "vnet_name" {
   description = "The name of the vNet where the Private Endpoint subnet is located."
   type        = string
 }
 
-variable "pe_subnet_name" {
+variable "subnet_name" {
   description = "The name of the subnet where the Private Endpoint will be created."
   type        = string
 }
