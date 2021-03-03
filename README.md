@@ -1,6 +1,14 @@
 # terraform-azurerm-private-endpoint
 Create a Private Endpoint for an Azure Resource.
 
+## Subresource name types
+|Data Lake File System Gen2	|dfs	|dfs_secondary|
+|Sql Database / Data Warehouse	|sqlServer	|
+|Storage Account	|blob	|blob_secondary|
+|Storage Account	|file	|file_secondary|
+|Storage Account	|queue	|queue_secondary|
+|Storage Account	|table	|table_secondary|
+|Storage Account	|web	|web_secondary|
 
 # Examples
 ```hcl
