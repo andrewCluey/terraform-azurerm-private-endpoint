@@ -24,8 +24,8 @@ data "azurerm_resource_group" "pe_rg" {
 ###############################
 resource "azurerm_private_endpoint" "pe" {
   name                = "${var.pe_resource_name}-pe"
-  location            = data.azurerm_resource_group.pe_rg.location
-  resource_group_name = data.azurerm_resource_group.pe_rg.name
+  location            = var.location
+  resource_group_name = var.pe_resource_group_name
   subnet_id           = data.azurerm_subnet.pe_subnet.id
 
   private_service_connection {
