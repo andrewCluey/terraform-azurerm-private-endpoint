@@ -5,7 +5,7 @@ Create a Private Endpoint for an Azure Resource.
 # Examples
 ```hcl
 
-module "private-endpoint" {
+module "private_endpoint" {
   source  = "andrewCluey/private-endpoint/azurerm"
   version = "1.0.0"
   
