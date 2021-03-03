@@ -31,8 +31,8 @@ resource "azurerm_private_endpoint" "pe" {
   private_service_connection {
     name                           = "${var.pe_resource_name}-connection"
     is_manual_connection           = false
-    private_connection_resource_id = var.pe_resource_id
-    subresource_names              = var.subresource_names
+    private_connection_resource_id = var.endpoint_resource.id
+    subresource_names              = var.endpoint_resource.type
   }
 
   private_dns_zone_group {
