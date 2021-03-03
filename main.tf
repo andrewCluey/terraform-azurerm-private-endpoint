@@ -36,7 +36,8 @@ resource "azurerm_private_endpoint" "pe" {
   }
 
   private_dns_zone_group {
-    name                 = var.private_dns_zone_name
-    private_dns_zone_ids = var.private_dns_zone_id
+    name                 = var.dns.zone_name
+    private_dns_zone_ids = var.dns.zone_id
   }
 }
+
