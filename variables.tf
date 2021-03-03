@@ -1,3 +1,11 @@
+variable "location" {
+  description = "The Azure region where the private Endpoint should be created"
+  type        = string
+  default     = "uksouth"
+  }
+
+
+
 variable "pe_network" {
   description = "The required Azure networking details for the new Private Endpoint NIC."
   type = object({
@@ -22,4 +30,9 @@ variable "dns" {
 variable "endpoint_resource_id" {
   description = "The ID of the resource that the new Private Endpoint will be assigned to."
   type        = string
+}
+
+variable "subresource_names" {
+  type = list(string)
+  default = null
 }
