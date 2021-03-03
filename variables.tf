@@ -30,12 +30,9 @@ variable "dns" {
     )}
 }
 
-variable "pe_resource_id" {
-  description = "The ID of the Resource that will have the new Private Endpoint Assigned."
-  type        = string
-}
-
-variable "pe_resource_name" {
-  description = "The Name of the Resource that will have the new Private Endpoint Assigned."
-  type        = string
+variable "endpoint_resource" {
+  type = object({
+    id   = string
+    name = string
+    )}
 }
