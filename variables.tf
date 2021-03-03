@@ -5,14 +5,18 @@ variable "location" {
   }
 
 
-
 variable "pe_network" {
   description = "The required Azure networking details for the new Private Endpoint NIC."
   type = object({
     resource_group_name = string
     vnet_name           = string
     subnet_name         = string
-    )}
+    })
+}
+
+variable "pe_resource_name" {
+  type = string
+  default = "newblob"
 }
 
 variable "pe_resource_group_name" {
@@ -22,9 +26,9 @@ variable "pe_resource_group_name" {
 
 variable "dns" {
   type = object({
-    zone_id   = string
+    zone_ids  = list(string)
     zone_name = string
-    )}
+    })
 }
 
 variable "endpoint_resource_id" {
