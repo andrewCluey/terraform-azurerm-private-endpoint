@@ -39,7 +39,3 @@ resource "azurerm_private_endpoint" "pe" {
     private_dns_zone_ids = var.dns.zone_ids
   }
 }
-
-output "pe_name" {
-  value = azurerm_private_endpoint.pe.name
-}
