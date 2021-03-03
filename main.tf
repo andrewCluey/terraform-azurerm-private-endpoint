@@ -8,16 +8,15 @@
 
 # Subnet where PE is to be created
 data "azurerm_subnet" "pe_subnet" {
-  name                 = var.subnet_name
-  virtual_network_name = var.vnet_name
-  resource_group_name  = var.vnet_resource_group_name
+  name                 = var.pe_network.subnet_name
+  virtual_network_name = var.pe_network.vnet_name
+  resource_group_name  = var.pe_network.resource_group_name
 }
 
-# Resource Group where the private Endpoint will reside. Should be the same as the Resource being assigned the Endpoint.
+# Resource Group where the private Endpoint will reside.
 data "azurerm_resource_group" "pe_rg" {
   name = var.pe_resource_group_name
 }
-
 
 ###############################
 # Create a new Private Endpoint
