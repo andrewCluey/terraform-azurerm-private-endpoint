@@ -30,12 +30,16 @@ resource "azurerm_private_endpoint" "pe" {
   private_service_connection {
     name                           = "${var.pe_resource_name}-connection"
     is_manual_connection           = false
-    private_connection_resource_id = var.endpoint_resource.id
+    private_connection_resource_id = var.endpoint_resource_id
+    subresource_names              = var.subresource_names
   }
 
   private_dns_zone_group {
     name                 = var.dns.zone_name
-    private_dns_zone_ids = var.dns.zone_id
+    private_dns_zone_ids = var.dns.zone_ids
   }
 }
 
+output "pe_name" {
+  value = azurerm_private_endpoint.pe.name
+}
