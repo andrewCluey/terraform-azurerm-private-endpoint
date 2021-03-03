@@ -23,15 +23,11 @@ variable "subresource_names" {
   type        = list(string)
 }
 
-
-variable "private_dns_zone_name" {
-  description = "The name of the privatelink DNS zone in Azure to register the Private Endpoints"
-  type        = string
-}
-
-variable "private_dns_zone_id" {
-  description = "The ID of the privatelink DNS zone in Azure to register the Private Endpoint. Use a Data lookup block in the calling code if not known."
-  type        = list(string)
+variable "dns" {
+  type = object({
+    zone_id   = string
+    zone_name = string
+    )}
 }
 
 variable "pe_resource_id" {
