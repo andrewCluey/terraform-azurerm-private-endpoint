@@ -9,8 +9,9 @@ provider "azurerm" {
   features {}
 }
 
-module "private_endpoint" {
-  source  = "../../"
+module "private-endpoint_example_simple" {
+  source  = "andrewCluey/private-endpoint/azurerm//examples/simple"
+  version = "2.0.1"
   
   pe_resource_group_name = "network"        # Resource Group where the new Private Endpoint will be created. 
   subresource_names      = ["blob"]
