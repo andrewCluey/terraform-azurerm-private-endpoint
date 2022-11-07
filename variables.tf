@@ -1,12 +1,12 @@
 variable "location" {
-  description = "The Azure region where the private Endpoint should be created"
+  description = "The Azure region where the private Endpoint will be created"
   type        = string
   default     = "uksouth"
   }
 
 
 variable "pe_network" {
-  description = "The required Azure networking details for the new Private Endpoint NIC."
+  description = "The details for the Azure network for the new Private Endpoint IP address."
   type = object({
     resource_group_name = string
     vnet_name           = string
@@ -14,17 +14,18 @@ variable "pe_network" {
     })
 }
 
-variable "pe_resource_name" {
+variable "private_endpoint_name" {
   type = string
-  default = "newblob"
+  description = "The name to assign to the new private Endpoint."
 }
 
 variable "pe_resource_group_name" {
-  description = "The name of the Resource group where the the Private Endpoint resource will be created."
+  description = "The name of the Resource group where the the Private Endpoint will be created."
   type        = string
 }
 
 variable "dns" {
+  description = "The Details of the private DNS Zone where the Private Endpoint will register."
   type = object({
     zone_ids  = list(string)
     zone_name = string
@@ -37,6 +38,7 @@ variable "endpoint_resource_id" {
 }
 
 variable "subresource_names" {
+  description = "list of subresource names which the Private Endpoint is able to connect to (eg, `blob` or `blob_secondary`), https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-dns"
   type = list(string)
   default = null
 }

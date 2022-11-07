@@ -8,13 +8,19 @@ Future changes include:
   -
 
 ## Example - create a Private Endpoint for a Blob endpoint of a Storage Account.
+This example creates a new Storage Account, to create a Private Endpoint for a Blob Endpoint using an existing Subnet.
 ```hcl
 
 terraform {
   # This module is being tested with Terraform 1.3.0 or later.
   required_version = ">= 1.3.0"
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "= 3.20.0"
+    }
+  }
 }
-
 provider "azurerm" {
   features {}
 }
@@ -41,8 +47,8 @@ resource "azurerm_storage_account" "sa" {
 # Get Data for a Private DNS zone to register the new PE IP address with.
 # ------------------------------------------------------------------------
 data "azurerm_private_dns_zone" "blob_dns" {
-  name                = "privatelink.blob"
-  resource_group_name = "rg-networking"
+  name                = "privatelink.blob.core.windows.net"
+  resource_group_name = "rg-dns"
 }
 
 
@@ -50,17 +56,18 @@ data "azurerm_private_dns_zone" "blob_dns" {
 # Deploy the private Endpoint module with minimum input parameters.
 # -------------------------------------------------------------------
 module "private-endpoint_example_simple" {
-  source  = "andrewCluey/private-endpoint"
-  version = "2.0.1"
+  #using local module to test latest version
+  source = "../../"
   
   pe_resource_group_name = azurerm_resource_group.rg.name
+  private_endpoint_name = "${azurerm_storage_account.sa.name}-pe"
   subresource_names      = ["blob"]
   endpoint_resource_id   = azurerm_storage_account.sa.id
    
   pe_network = {
-    resource_group_name = "network"
-    vnet_name           = "core-vnet" 
-    subnet_name         = "subnetA"
+    resource_group_name = "rg-network"
+    vnet_name           = "vn-spoke" 
+    subnet_name         = "sn-a"
   }
   
   dns = {
@@ -85,13 +92,13 @@ module "private-endpoint_example_simple" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_dns"></a> [dns](#input\_dns) | n/a | <pre>object({<br>    zone_ids  = list(string)<br>    zone_name = string<br>    })</pre> | n/a | yes |
+| <a name="input_dns"></a> [dns](#input\_dns) | The Details of the private DNS Zone where the Private Endpoint will register. | <pre>object({<br>    zone_ids  = list(string)<br>    zone_name = string<br>    })</pre> | n/a | yes |
 | <a name="input_endpoint_resource_id"></a> [endpoint\_resource\_id](#input\_endpoint\_resource\_id) | The ID of the resource that the new Private Endpoint will be assigned to. | `string` | n/a | yes |
-| <a name="input_location"></a> [location](#input\_location) | The Azure region where the private Endpoint should be created | `string` | `"uksouth"` | no |
-| <a name="input_pe_network"></a> [pe\_network](#input\_pe\_network) | The required Azure networking details for the new Private Endpoint NIC. | <pre>object({<br>    resource_group_name = string<br>    vnet_name           = string<br>    subnet_name         = string<br>    })</pre> | n/a | yes |
-| <a name="input_pe_resource_group_name"></a> [pe\_resource\_group\_name](#input\_pe\_resource\_group\_name) | The name of the Resource group where the the Private Endpoint resource will be created. | `string` | n/a | yes |
-| <a name="input_pe_resource_name"></a> [pe\_resource\_name](#input\_pe\_resource\_name) | n/a | `string` | `"newblob"` | no |
-| <a name="input_subresource_names"></a> [subresource\_names](#input\_subresource\_names) | n/a | `list(string)` | `null` | no |
+| <a name="input_location"></a> [location](#input\_location) | The Azure region where the private Endpoint will be created | `string` | `"uksouth"` | no |
+| <a name="input_pe_network"></a> [pe\_network](#input\_pe\_network) | The details for the Azure network for the new Private Endpoint IP address. | <pre>object({<br>    resource_group_name = string<br>    vnet_name           = string<br>    subnet_name         = string<br>    })</pre> | n/a | yes |
+| <a name="input_pe_resource_group_name"></a> [pe\_resource\_group\_name](#input\_pe\_resource\_group\_name) | The name of the Resource group where the the Private Endpoint will be created. | `string` | n/a | yes |
+| <a name="input_private_endpoint_name"></a> [private\_endpoint\_name](#input\_private\_endpoint\_name) | The name to assign to the new private Endpoint. | `string` | n/a | yes |
+| <a name="input_subresource_names"></a> [subresource\_names](#input\_subresource\_names) | list of subresource names which the Private Endpoint is able to connect to (eg, `blob` or `blob_secondary`), https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-dns | `list(string)` | `null` | no |
 
 ## Outputs
 

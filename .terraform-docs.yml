@@ -21,6 +21,7 @@ content: |-
   {{ .Header }}
 
   ## Example - create a Private Endpoint for a Blob endpoint of a Storage Account.
+     This example creates a new Storage Account, to create a Private Endpoint for a Blob Endpoint using an existing Subnet.
   ```hcl
     {{ include "examples/blob_endpoint/main.tf" }}
   ```

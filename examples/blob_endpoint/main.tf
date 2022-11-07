@@ -2,8 +2,13 @@
 terraform {
   # This module is being tested with Terraform 1.3.0 or later.
   required_version = ">= 1.3.0"
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "= 3.20.0"
+    }
+  }
 }
-
 provider "azurerm" {
   features {}
 }
@@ -30,8 +35,8 @@ resource "azurerm_storage_account" "sa" {
 # Get Data for a Private DNS zone to register the new PE IP address with.
 # ------------------------------------------------------------------------
 data "azurerm_private_dns_zone" "blob_dns" {
-  name                = "privatelink.blob"
-  resource_group_name = "rg-networking"
+  name                = "privatelink.blob.core.windows.net"
+  resource_group_name = "rg-dns"
 }
 
 
@@ -39,17 +44,18 @@ data "azurerm_private_dns_zone" "blob_dns" {
 # Deploy the private Endpoint module with minimum input parameters.
 # -------------------------------------------------------------------
 module "private-endpoint_example_simple" {
-  source  = "andrewCluey/private-endpoint"
-  version = "2.0.1"
+  #using local module to test latest version
+  source = "../../"
   
   pe_resource_group_name = azurerm_resource_group.rg.name
+  private_endpoint_name = "${azurerm_storage_account.sa.name}-pe"
   subresource_names      = ["blob"]
   endpoint_resource_id   = azurerm_storage_account.sa.id
    
   pe_network = {
-    resource_group_name = "network"
-    vnet_name           = "core-vnet" 
-    subnet_name         = "subnetA"
+    resource_group_name = "rg-network"
+    vnet_name           = "vn-spoke" 
+    subnet_name         = "sn-a"
   }
   
   dns = {
