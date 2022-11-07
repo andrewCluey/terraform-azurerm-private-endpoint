@@ -1,0 +1,64 @@
+# .terraform-docs.yml
+formatter: "markdown" # this is required
+
+version: "0.16.0"
+
+header-from: main.tf
+footer-from: ""
+
+recursive:
+  enabled: false
+  path: modules
+
+sections:
+  hide: []
+  show: []
+
+  hide-all: false # deprecated in v0.13.0, removed in v0.15.0
+  show-all: true  # deprecated in v0.13.0, removed in v0.15.0
+
+content: |-
+  {{ .Header }}
+
+  ## Example - default
+  ```hcl
+    {{ include "examples/default/main.tf" }}
+  ```
+
+  ## Subresource name types
+  |Resource Type|Subresource name|Secondary Subresource name|
+  |---|---|---|
+  |Data Lake File System Gen2	|dfs	|dfs_secondary|
+  |Sql Database / Data Warehouse	|sqlServer	|
+  |Storage Account	|blob	|blob_secondary|
+  |Storage Account	|file	|file_secondary|
+  |Storage Account	|queue	|queue_secondary|
+  |Storage Account	|table	|table_secondary|
+  |Storage Account	|web	|web_secondary|
+
+  {{ .Inputs }}
+
+  {{ .Outputs }}  
+
+output-values:
+  enabled: false
+  from: ""
+
+sort:
+  enabled: true
+  by: name
+
+settings:
+  anchor: true
+  color: true
+  default: true
+  description: false
+  escape: true
+  hide-empty: false
+  html: true
+  indent: 2
+  lockfile: true
+  read-comments: true
+  required: true
+  sensitive: true
+  type: true

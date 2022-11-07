@@ -1,10 +1,17 @@
-#########################################################
-# Creates a New Private Endpoint for a specified Resource
-#########################################################
+/**
+ * # terraform-azurerm-private-endpoint
+ *
+ * Creates a new private endpoint for specified resource.
+ * The module will perform a data lookup for the network detaisl from the `pe_network` input object.
+ *
+ * Future changes include:
+ *   - 
+ */
 
-##############
+
+# ---------------------------------------------------------------------------
 # Data Lookups
-##############
+# ---------------------------------------------------------------------------
 
 # Subnet where PE is to be created
 data "azurerm_subnet" "pe_subnet" {
@@ -13,14 +20,10 @@ data "azurerm_subnet" "pe_subnet" {
   resource_group_name  = var.pe_network.resource_group_name
 }
 
-# Resource Group where the private Endpoint will reside.
-data "azurerm_resource_group" "pe_rg" {
-  name = var.pe_resource_group_name
-}
 
-###############################
+# ---------------------------------------------------------------------------
 # Create a new Private Endpoint
-###############################
+# ---------------------------------------------------------------------------
 resource "azurerm_private_endpoint" "pe" {
   name                = "${var.pe_resource_name}-pe"
   location            = var.location

@@ -1,8 +1,7 @@
 
 terraform {
-  # This module is now only being tested with Terraform 0.13.x. However, to make upgrading easier, we are setting
-  # forwards compatible with 0.13.x code.
-  required_version = ">= 0.13.0"
+  # This module is being tested with Terraform 1.3.0 or later.
+  required_version = ">= 1.3.0"
 }
 
 provider "azurerm" {
@@ -10,7 +9,7 @@ provider "azurerm" {
 }
 
 module "private-endpoint_example_simple" {
-  source  = "andrewCluey/private-endpoint/azurerm//examples/simple"
+  source  = "andrewCluey/private-endpoint"
   version = "2.0.1"
   
   pe_resource_group_name = "network"        # Resource Group where the new Private Endpoint will be created. 
