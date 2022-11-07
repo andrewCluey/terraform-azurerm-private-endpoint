@@ -20,9 +20,9 @@ sections:
 content: |-
   {{ .Header }}
 
-  ## Example - default
+  ## Example - create a Private Endpoint for a Blob endpoint of a Storage Account.
   ```hcl
-    {{ include "examples/default/main.tf" }}
+    {{ include "examples/blob_endpoint/main.tf" }}
   ```
 
   ## Subresource name types

@@ -7,7 +7,7 @@ The module will perform a data lookup for the network detaisl from the `pe_netwo
 Future changes include:
   -
 
-## Example - default
+## Example - create a Private Endpoint for a Blob endpoint of a Storage Account.
 ```hcl
 
 terraform {
@@ -20,9 +20,9 @@ provider "azurerm" {
 }
 
 
-# ----------------------------------------------------------------
-# Pre-requisites. Including an example resource that can use a PE.
-# ----------------------------------------------------------------
+# ------------------------------------------------------------------------
+# Pre-requisites. Including a storage account for a blob private endpoint.
+# ------------------------------------------------------------------------
 
 resource "azurerm_resource_group" "rg" {
   name     = "rg-default-pe"
@@ -37,15 +37,18 @@ resource "azurerm_storage_account" "sa" {
   account_replication_type = "GRS"
 }
 
+# ------------------------------------------------------------------------
+# Get Data for a Private DNS zone to register the new PE IP address with.
+# ------------------------------------------------------------------------
 data "azurerm_private_dns_zone" "blob_dns" {
   name                = "privatelink.blob"
   resource_group_name = "rg-networking"
 }
 
 
-# ----------------------------------------------------------------
-# Deploying the private Endpoint module with only required inputs.
-# ----------------------------------------------------------------
+# -------------------------------------------------------------------
+# Deploy the private Endpoint module with minimum input parameters.
+# -------------------------------------------------------------------
 module "private-endpoint_example_simple" {
   source  = "andrewCluey/private-endpoint"
   version = "2.0.1"
