@@ -32,13 +32,18 @@ resource "azurerm_storage_account" "sa" {
 }
 
 # ------------------------------------------------------------------------
-# Get Data for a Private DNS zone to register the new PE IP address with.
+# Get Networking Data for a Private Endpoint
 # ------------------------------------------------------------------------
 data "azurerm_private_dns_zone" "blob_dns" {
   name                = "privatelink.blob.core.windows.net"
   resource_group_name = "rg-dns"
 }
 
+data "azurerm_subnet" "sn" {
+  name                 = "sn-a"
+  virtual_network_name = "vn-spoke"
+  resource_group_name  = "rg-network"
+}
 
 # -------------------------------------------------------------------
 # Deploy the private Endpoint module with minimum input parameters.
@@ -46,20 +51,16 @@ data "azurerm_private_dns_zone" "blob_dns" {
 module "private-endpoint_example_simple" {
   #using local module to test latest version
   source = "../../"
-  
+
   pe_resource_group_name = azurerm_resource_group.rg.name
-  private_endpoint_name = "${azurerm_storage_account.sa.name}-pe"
+  private_endpoint_name  = "${azurerm_storage_account.sa.name}-pe"
   subresource_names      = ["blob"]
   endpoint_resource_id   = azurerm_storage_account.sa.id
-   
-  pe_network = {
-    resource_group_name = "rg-network"
-    vnet_name           = "vn-spoke" 
-    subnet_name         = "sn-a"
-  }
-  
+  pe_subnet_id           = data.azurerm_subnet.sn.id
+
+
   dns = {
-    zone_ids   = [data.azurerm_private_dns_zone.blob_dns.id]
-    zone_name  = data.azurerm_private_dns_zone.blob_dns.name
+    zone_ids  = [data.azurerm_private_dns_zone.blob_dns.id]
+    zone_name = data.azurerm_private_dns_zone.blob_dns.name
   }
 }

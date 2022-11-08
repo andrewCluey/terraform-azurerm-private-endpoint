@@ -2,20 +2,15 @@ variable "location" {
   description = "The Azure region where the private Endpoint will be created"
   type        = string
   default     = "uksouth"
-  }
+}
 
-
-variable "pe_network" {
-  description = "The details for the Azure network for the new Private Endpoint IP address."
-  type = object({
-    resource_group_name = string
-    vnet_name           = string
-    subnet_name         = string
-    })
+variable "pe_subnet_id" {
+  description = "The ID of the Subnet where the Private Endpoint IP address will be created."
+  type        = string
 }
 
 variable "private_endpoint_name" {
-  type = string
+  type        = string
   description = "The name to assign to the new private Endpoint."
 }
 
@@ -29,7 +24,7 @@ variable "dns" {
   type = object({
     zone_ids  = list(string)
     zone_name = string
-    })
+  })
 }
 
 variable "endpoint_resource_id" {
@@ -39,6 +34,6 @@ variable "endpoint_resource_id" {
 
 variable "subresource_names" {
   description = "list of subresource names which the Private Endpoint is able to connect to (eg, `blob` or `blob_secondary`), https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-dns"
-  type = list(string)
-  default = null
+  type        = list(string)
+  default     = null
 }

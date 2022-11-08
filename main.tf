@@ -8,28 +8,15 @@
  *   - 
  */
 
-
-# ---------------------------------------------------------------------------
-# Data Lookups
-# ---------------------------------------------------------------------------
-
-# Subnet where PE is to be created
-data "azurerm_subnet" "pe_subnet" {
-  name                 = var.pe_network.subnet_name
-  virtual_network_name = var.pe_network.vnet_name
-  resource_group_name  = var.pe_network.resource_group_name
-}
-
-
 # ---------------------------------------------------------------------------
 # Create a new Private Endpoint
 # ---------------------------------------------------------------------------
 resource "azurerm_private_endpoint" "pe" {
-  name                = "${var.private_endpoint_name}"
+  name                = var.private_endpoint_name
   location            = var.location
   resource_group_name = var.pe_resource_group_name
-  subnet_id           = data.azurerm_subnet.pe_subnet.id
-  
+  subnet_id           = var.pe_subnet_id
+
   private_service_connection {
     name                           = "${var.private_endpoint_name}-connection"
     is_manual_connection           = false
